@@ -1,0 +1,45 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.header {
+    display: block;
+    height: 46.5px;
+    width: 100vw;
+    background-color: black;
+}
+
+.nav li {
+    display: inline-block;
+    list-style-type: none;
+    position: relative;
+}
+
+.nav > ul > li > a {
+    display: inline-block;
+    color: white;
+    line-height: 46px;
+    text-decoration: none;
+    text-transform: uppercase;
+    padding: 0px 24px;
+}
+
+.nav li:hover a {
+    background-color: #ccc;
+    color: black;
+}
+
+:root {
+    --red-color: red;
+    --white-color: white;
+}
+
+body > .test > #testcode {
+    color: var(--red-color);
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    text-decoration: line-through; 
+}
