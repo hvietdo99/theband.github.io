@@ -1,61 +1,43 @@
 <!DOCTYPE html>
-<hmtl>
-    <head>
-        <meta charset="UTF-8">
-        <style>
-            * {
-                padding: 0;
-                margin: 0;
-                box-sizing: border-box;
-                font-family: sans-serif;
-            }
+<html>
+<style>
+div {
+display: flex;
+justify-content: space-between;
+}
 
-            .header {
-                display: block;
-                background-color: black;
-                width: 100vw;
-                height: 46.5px;
-            }
+#nav-ul {
+position: relative;
+right: -100%;
 
-            .nav li {
-                display: inline-block;
-                list-style-type: none;
-            }
+}
 
-            .nav li a {
-                color: white;
-                line-height: 46.5px;
-                padding: 0 24px;
-                text-decoration: none;
-            }
+</style>
+<body>
+<div>
+<button>Click me!</button>
 
-            .nav li a:hover {
-                display: block;
-                background-color: #ccc;
-                color: black;
-            }
+<ul id ="nav-ul">
+<li>Javascript</li>
+<li>Javascript</li>
+<li>Javascript</li>
+</ul>
 
-            .nav li a:active {
-                background-color: red;
-            }
-        </style>
-    </head>
+</div>
 
-    <body>
-        <div class="header">
-            <div class="nav">
-                <ul>
-                    <li><a href="">1</a></li>
-                    <li><a href="">2</a></li>
-                    <li><a href="">3</a></li>
-                    <li><a href="">4</a></li>
-                    <li><a href="">5</a></li>
-                </ul>
-            </div>
-        </div>
 
-        <div>
+<script>
+ const showButton = document.querySelector('button');
+ const showUl = document.getElementById('nav-ul');
+ 
+ showButton.addEventListener('click', function() {
+  showUl.classList.add('show-ul');
+  showUl.style.right = '0';})
+  
+</script>
 
-        </div>
-    </body>
-</hmtl>
+<style>
+</style>
+
+</body>
+</html>

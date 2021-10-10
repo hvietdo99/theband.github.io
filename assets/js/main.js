@@ -31,22 +31,22 @@ var string = 'ok dokey';
 
 
 // Giong khai bao Class trong cac ngon ngu lap trinh OOP khac
-function myClass(id, color, image) {
-    this.id = id;
-    this.color = color;
-    this.image = image;
+function myClass() {
+    this.id = arguments[0];
+    this.color = arguments[1];
+    this.image = arguments[2];
+}
 
-    this.getId = function() {
-        return id;
-    }
+myClass.prototype.getId = function() {
+    return this.id;
+}
 
-    this.getColor = function() {
-        return color;
-    }
+myClass.prototype.getColor = function() {
+    return this.color;
+}
 
-    this.getImage = function() {
-        return image;
-    }
+myClass.prototype.getImage = function() {
+    return this.image;
 }
 
 myClass.prototype.name = 'Viet';
@@ -54,10 +54,8 @@ myClass.prototype.name = 'Viet';
 var obj1 = new myClass(1, '#fff', 'abc');
 var obj2 = new myClass(2, '#aaa', 'def');
 var obj3 = new myClass(3, '#ccc', 'ghi');
-var obj4 = {
-    id: 4,
-    color: '#bbb',
-    image: 'mno'
+obj1.getId = function() {
+    return this.id;
 }
 
 var objlist = [];
@@ -77,27 +75,10 @@ var myArray = [
     [4,5],
     [6,7,8],
     [9,10,11,12],
-    5,
-    6
+    13,
+    14
 ];
-
-// var n = myArray.length;
-// for (var i=0; i<n; i++){
-//     if(Array.isArray(myArray[i])){
-//         var m = myArray[i].length;
-//         for (var j=0; j<m; j++){
-//             console.log(myArray[i][j]);
-//         }
-//     } else console.log(myArray[i]);
-// }
-
-// for (var key of myArray){
-//     if(Array.isArray(key)){
-//         for (var key1 of key){
-//             console.log(key1);
-//         } 
-//     } else console.log(key);
-// }
+var myFlatA = myArray.reduce((result, cv) => result.concat(cv));
 
 var formValues = [
     { field: 'name', value: 'Sơn Đặng' },
@@ -144,16 +125,22 @@ var courses = [
 // Define a new map2() method for Array constructor !!
 Array.prototype.map2 = function(callback) {
     n = this.length;
-    var result = [];
+    var result = []; 
 
-    for(var i=0; i<n; i++) {
-        result = result.concat(callback(this[i], i));
+    for (var i=0; i<n; i++) {
+        result.push(callback(this[i], i));
     }
 
     return result;
 }
 
-var newCourses = courses.map2((item, cv) => `<h2>${item}<\\h2>`);
+var newCourses = courses.map2(function(item, cv) {
+    return `<h2>${item}</h2>`;
+});
+var myArray2 = [];
+var x = myArray.map2((item, ci) => {
+    myArray2 = myArray2.concat(item);
+})
 console.log(newCourses.join(''))
 
 // Define a new filter2() method for Array constructor !!
@@ -197,7 +184,7 @@ console.log(find1);
 
 // Define a new every2() method for Array constructor !!
 Array.prototype.every2 = function(callback) {
-    n = this.length;
+    var n = this.length;
     
     for (var i=0; i<n; i++) {
         if (!callback(this[i], i)) {
@@ -215,7 +202,7 @@ console.log(every1);
 
 // Define a new some2() method for Array constructor !!
 Array.prototype.some2 = function(callback) {
-    n = this.length;
+    var n = this.length;
 
     for (var i=0; i<n; i++) {
         if (callback(this[i], i)) {
@@ -226,7 +213,136 @@ Array.prototype.some2 = function(callback) {
     return false;
 }
 
-var some1 = courses.some2((item, cv) => {
+var some1 = courses.some2((item, ci) => {
     return typeof item === 'string';
 })
 console.log(some1);
+
+// Define a new forEach2() method for Array constructor !!
+Array.prototype.forEach2 = function(callback) {
+    var n = this.length;
+    
+    for (var i=0; i<n; i++) {
+        callback(this[i], i);
+    }
+
+    return undefined;
+}
+
+var myArr = new Array(10, 20);
+console.log(myArr);
+
+// Define a new forEach2() method for Array constructor !!
+Array.prototype.reduce2 = function(callback, result) {
+    var i = 0;
+    var n = this.length;
+    if (arguments.length < 2) {
+        var result = this[0];
+        i = 1;
+    }
+
+    for (   ; i<n; i++) {
+        result = callback(result, this[i], i, this);
+    }
+    
+    return result;
+}
+
+var courseslist = [
+    {
+        name: 'Js',
+        coin: 1000
+    },
+    {
+        name: 'PHP',
+        coin: 2000
+    },
+    {
+        name: 'C++',
+        coin: 400
+    },
+    {
+        name: 'Python',
+        coin: 700
+    }
+];
+var coin = 'coin';
+
+var totalcoin = courseslist.reduce2((result, item) => {
+    if (item.hasOwnProperty(coin)) {
+        return result + item.coin; 
+    }   
+}, 0);
+console.log(totalcoin.toString());
+
+var test = document.querySelector('h1#testcode');
+test.setAttribute('title', 'OKEY!!')
+console.log(test);
+
+var test = document.querySelector('div');
+console.log(test);
+
+function Array2() {
+    var n = arguments.length;
+    this.array = [];
+
+    for (var i=0; i<n; i++) {
+        this.array.push(arguments[i]);
+    }
+}
+
+var myA = new Array2('hello', 2, 3, 4);
+
+// onclick is a method() that receives function as callback, and then put event object as a parameter of
+// callback function !
+var span = document.querySelector('span');
+span.onclick = function(e) {
+    console.log(e.target);
+}
+
+var anchor = document.querySelectorAll('.header > .nav > ul > li');
+var ul = document.querySelector('ul');
+
+function printf() {
+    console.log('Hello! I\'m Viet');
+}
+ul.addEventListener('click', printf)
+
+var json = '[{"name": "Js", "coin": 1000}, {"name": "PHP", "coin": 2000}, {"name": "Python", "coin": 700}]';
+
+for (var i=0; i<anchor.length; i++) {
+    anchor[i].onclick = function(e) {
+        e.stopPropagation();
+        if (e.target.href == "https://www.google.com/") {
+            e.preventDefault();     
+            console.log(typeof JSON.parse(json))
+        }
+        console.log(e.target);
+    }
+}
+
+function sleep(ms) {
+    return new Promise((resolve) => {
+        setTimeout(function() {
+            resolve(Math.random())
+        }, ms);
+    })
+}
+
+sleep(1000)
+    .then(function(data) { // Dinh nghia ham resolve
+        console.log(data);
+        return sleep(1000);
+    }) 
+    .then(function(data) {
+        console.log(data);
+        return sleep(1000);
+    })
+    .then(function(data) {
+        console.log(data);
+        return sleep(1000);
+    })
+    .catch() // Dinh nghia ham reject
+    .finally(function() {
+        console.log('DONE!!!');
+    })
